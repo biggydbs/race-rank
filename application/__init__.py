@@ -24,6 +24,7 @@ app.config.update(
 oauth = OAuth()
 
 client = MongoClient('ds131340.mlab.com', 31340)
+handle.authenticate("biggydbs","biggy30695")
 
 db = client["race_ranking"]
 
