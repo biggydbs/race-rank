@@ -1196,7 +1196,7 @@ def rider_search():
 
 @appli.route("/",methods=["GET","POST"])
 def homepage():
-	read_xlsx()
+	
 	logged_in = False
 	if "email" in session:
 		logged_in = True
