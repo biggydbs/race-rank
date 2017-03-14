@@ -23,9 +23,9 @@ app.config.update(
 
 oauth = OAuth()
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('ds131340.mlab.com', 31340)
 
-db = client["race_rank"]
+db = client["race_ranking"]
 
 # Register the blueprint (routes)
 from application.views import appli
