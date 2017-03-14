@@ -25,7 +25,7 @@ oauth = OAuth()
 
 client = MongoClient('ds131340.mlab.com', 31340)
 db = client["race_ranking"]
-db.authenticate("biggydbs","biggy30695")
+db.authenticate("biggy","root")
 
 
 
