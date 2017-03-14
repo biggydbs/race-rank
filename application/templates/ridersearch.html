@@ -1,0 +1,201 @@
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>Rider Search</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <link rel="icon" href="../static/favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+        
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="../static/css/theme-default.css"/>
+        <!-- EOF CSS INCLUDE -->                                     
+    </head>
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            {{get_html}}
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                <ul class="x-navigation">
+                    <li class="xn-logo">
+                        <a href="">Mountain Biking</a>
+                        <a href="" class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">                                                                
+                    </li>
+                    <li class="xn-title">Navigation</li>
+                    <li>
+                        <a href="/admin_login"><span class="fa fa-desktop"></span> <span class="xn-text">Admin Portal</span></a> 
+                    
+                        {% if logged_in == False %}
+                        <a href="/login"><span class="fa fa-facebook"></span> <span class="xn-text">Login Now</span></a>     
+                        {% else %}
+                        <a href="/userhome"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>   
+                        {% endif %}                   
+                        
+                    </li> 
+					<li class="active">
+                        <a href="{{url_for('views.rider_search')}}"><span class="fa fa-search"></span> <span class="xn-text">Find Riders</span></a>                        
+                    </li>		
+                    <li >
+                        <a href="{{url_for('controllers.rankings')}}"><span class="fa fa-desktop"></span> <span class="xn-text">View Ranks</span></a>                        
+                    </li>   			                   
+                </ul>
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SIGN IN -->
+                    <li class="xn-icon-button pull-right">
+                    {% if logged_in == False %}
+                        <a href="/login"><span class="fa fa-facebook"></span></a>
+                    {% endif %}                        
+                    </li> 
+                    <!-- END SIGN IN-->
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                    
+                
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li class="active">Rider Book</li>
+                </ul>
+                <!-- END BREADCRUMB -->                                                
+                
+                <!-- PAGE TITLE -->
+                <div class="page-title">                    
+                    <h2><span class="fa fa-users"></span> Rider Book <small>DB_complete rider count</small></h2>
+                </div>
+                <!-- END PAGE TITLE -->                
+                
+                <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>Use search to find rider. You can search by: name, address, phone.</p>
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="fa fa-search"></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name = "search_rider" placeholder="Who are you looking for?"/>
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-primary">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row">
+                    {% if output != "No Rider Found" %}
+                    {% for out in output %}
+                        <div class="col-md-3">
+                            <!-- CONTACT ITEM -->
+                            <div class="panel panel-default">
+                                <div class="panel-body profile">
+                                    <div class="profile-image">
+                                        <img src="{{out['profile_pic']}}" height="{{height}}px"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">{{out['first_name']}} {{out['last_name']}}</div>
+                                        <div class="profile-data-title">{{out['name_alias']}}</div>
+                                    </div>
+                                    <div class="profile-controls">
+                                        <a href="#" class="profile-control-left"><span class="fa fa-facebook"></span></a>
+                                        <a href="#" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                                    </div> 
+                                </div>                                
+                                <div class="panel-body">                                    
+                                    <div class="contact-info">
+                                        <p><small>Bike</small><br/>{{out['dream_bike']}}</p>
+                                        <p><small>Rider Style</small><br/>{{out['riding_style']}}</p>
+                                        <p><small>Location</small><br/>{{out['state']}}, {{out['country']}}</p>                                   
+                                    </div>
+                                </div>                                
+                            </div>
+                            <!-- END CONTACT ITEM -->
+                        </div>
+                            <!-- CONTACT ITEM -->
+                            
+                            <!-- END CONTACT ITEM -->
+                          
+                   
+                    {% endfor %}
+                    {% else %}
+                    <h1> {{output}} <h1>
+                    {% endif %}
+                    </div>
+                    
+
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->                                                 
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+
+        <!-- START PRELOADS -->
+        <audio id="audio-alert" src="../static/audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="../static/audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->          
+        
+    <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
+
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='../static/js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="../static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <!-- END THIS PAGE PLUGINS-->        
+
+        <!-- START TEMPLATE -->
+        <script type="text/javascript" src="../static/js/settings.js"></script>
+        
+        <script type="text/javascript" src="../static/js/plugins.js"></script>        
+        <script type="text/javascript" src="../static/js/actions.js"></script> 
+        <script>
+            $('.ach').on('click', function() {
+              $('li').removeClass('active');
+              $(this).closest('li').addClass('active');
+            });
+        </script>       
+        <!-- END TEMPLATE -->
+
+    <!-- END SCRIPTS -->         
+    </body>
+</html>
+
+
+
+
+
+

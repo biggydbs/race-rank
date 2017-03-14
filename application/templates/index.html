@@ -1,0 +1,133 @@
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>Rider Search</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <link rel="icon" href="../static/favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+        
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="../static/css/theme-default.css"/>
+        <!-- EOF CSS INCLUDE -->                                     
+    </head>
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                <ul class="x-navigation">
+                    <li class="xn-logo">
+                        <a href="">Home</a>
+                        <a href="" class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">  
+                            {% if logged_in == True %}
+                                      <div class="profile">
+                            <div class="profile-image">
+                                <img src="{{profile_pic}}" alt="John Doe"/>
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">{{facebook_name}}</div>
+                                <div class="profile-data-title">Rider</div>
+                            </div>
+                            
+                            </div>                        
+                            {% endif %}   
+                    </li>
+                    <li class="xn-title">Navigation</li>
+
+                    <li>
+                    <a href="/admin_login"><span class="fa fa-desktop"></span> <span class="xn-text">Admin Portal</span></a> 
+                        {% if logged_in == False %}
+                        <a href="/login"><span class="fa fa-facebook"></span> <span class="xn-text">Login Now</span></a>     
+                        {% else %}
+                        <a href="/userhome"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>   
+                        {% endif %}  
+
+                        
+                    </li> 
+					<li >
+                        <a href="{{url_for('views.rider_search')}}"><span class="fa fa-search"></span> <span class="xn-text">Find Riders</span></a>                        
+                    </li>	
+                    <li >
+                        <a href="{{url_for('controllers.rankings')}}"><span class="fa fa-desktop"></span> <span class="xn-text">View Ranks</span></a>                        
+                    </li>   				
+                   
+                </ul>
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SIGN IN -->
+                    <li class="xn-icon-button pull-right">
+                    {% if logged_in == False %}
+                        <a href="/login"><span class="fa fa-facebook"></span></a>
+                    {% endif %}                        
+                    </li> 
+                    <!-- END SIGN IN-->
+                </ul>      
+                <div class="row">
+                        <div class="col-md-12">
+                            <center><p style="font-size:50px"><i>Customizable Homepage</i></p></center>
+                            </br>
+                            
+                            <center><p style="font-size:20px"><i>Product buyer</i></p></center>
+                            
+                                </br>
+                            
+                            <center><p style="font-size:20px"><i><b>Developer/Designer:</b> Hitesh, Abhijit</i></p></center>
+                            
+                        <div>
+                            
+                    </div>                                           
+            </div>   
+             </div>
+        <!-- END PAGE CONTAINER -->
+
+        <!-- START PRELOADS -->
+        <audio id="audio-alert" src="../static/audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="../static/audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->          
+        
+    <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
+
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='../static/js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="../static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <!-- END THIS PAGE PLUGINS-->        
+
+        <!-- START TEMPLATE -->
+        <script type="text/javascript" src="../static/js/settings.js"></script>
+        
+        <script type="text/javascript" src="../static/js/plugins.js"></script>        
+        <script type="text/javascript" src="../static/js/actions.js"></script>   
+        <script>
+            $('.ach').on('click', function() {
+              $('li').removeClass('active');
+              $(this).closest('li').addClass('active');
+            });
+        </script>     
+        <!-- END TEMPLATE -->
+
+    <!-- END SCRIPTS -->         
+    </body>
+</html>   

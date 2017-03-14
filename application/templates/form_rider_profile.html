@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>Joli User</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <link rel="icon" href="../static/favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+                        
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="../static/css/theme-default.css"/>
+        <!-- EOF CSS INCLUDE -->                   
+    </head>
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            
+            {{get_html}}
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li> 
+                    <!-- END SIGN OUT -->
+                    <!-- MESSAGES -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#"><span class="fa fa-comments"></span></a>
+                        <div class="informer informer-danger">{{len_all_messages}}</div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>                                
+                                <div class="pull-right">
+                                    <span class="label label-danger">{{len_all_messages}} new</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                               
+                                {% for messages in all_messages %}  
+
+                                <a href="#" class="list-group-item">
+                                    <div class="list-group-status status-online"></div>
+                                    <span class="contacts-title">{{messages.topic}}</span>
+                                    <p>{{messages.body}}</p>
+                                </a>
+                                {% endfor %}
+                            </div>                                
+                        </div>                        
+                    </li>
+                    <!-- END MESSAGES -->
+                    <!-- TASKS -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#"><span class="fa fa-tasks"></span></a>
+                        <div class="informer informer-warning">{{len_all_races}}</div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>                                
+                                <div class="pull-right">
+                                    <span class="label label-warning">{{len_all_races}} active</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group scroll" style="height: 200px;">  
+
+                            {% for races in all_races %}                              
+                                <a class="list-group-item" href="#">
+                                    <strong>{{races.name}}</strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        
+                                        {% if races["difficulty"] > 80 %}
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{races.difficulty}}%;">{{races.difficulty}}%</div>
+
+                                        {% elif races["difficulty"] > 60 %}
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{races.difficulty}}%;">{{races.difficulty}}%</div>
+
+                                        {% else %}
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{races.difficulty}}%;">{{races.difficulty}}%</div>
+
+                                        {% endif %}
+
+                                    </div>
+                                    <small class="text-muted">{{races.description}} / {{races.difficulty}}%</small>
+                                </a>
+                            {% endfor %}
+                            </div>                                
+                        </div>                        
+                    </li>
+                    <!-- END TASKS -->
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                   
+                {% if error %}
+                    <div class="alert alert-info" id="error_flash">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong> {{ error }}
+                    </div>
+                {% endif %}  
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="#">Forms</a></li>
+                    <li class="active">Rider Details</li>
+                </ul>
+                <!-- END BREADCRUMB -->
+                
+                <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">
+                
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <form class="form-horizontal"  method="POST"  enctype="multipart/form-data">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><strong>Rider Details</strong></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p></p>
+                                </div>
+                                <div class="panel-body">                                                                        
+                                    
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Rider Alias</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                                <input value="{{name_alias}}" name="name_alias" type="text" class="form-control" placeholder="Your Rider Alias" required />
+											</div>                                            
+                                            <span class="help-block">Please enter Rider Alias (as per your ID).</span>
+                                        </div>
+                                    </div>
+									
+									<div class="form-group rider_type">
+                                        <label class="col-md-3 col-xs-12 control-label" >Rider Type</label>
+                                        <div class="col-md-6 col-xs-12">                                                                                            
+                                            <select id="rider_type" class="form-control select" name="rider_type" value="{{rider_type}}" >
+                                                <option value="Professional" >Professional</option>
+                                                <option value="Hobbiest" >Hobbiest</option>
+                                                <option value="Manager">Manager</option>
+												<option value="other">Other</option>
+                                            </select>
+                                            <span class="help-block">Are you a Professional Rider?</span>
+                                        </div>
+                                    </div>
+									
+									<div class="form-group hider_rider_type">
+                                        <label class="col-md-3 col-xs-12 control-label">Enter Your Rider Type</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-users"></span></span>
+                                                <input value="{{rider_type}}" id="rider_type_other_input" name="rider_type_other_input" type="text" class="form-control" placeholder="Enter Your Rider Type" required/>
+                                            </div>                                            
+                                            <span class="help-block">Please enter your rider type.</span>
+                                        </div>
+                                    </div>
+									
+									<div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Riding Style</label>
+                                        <div class="col-md-6 col-xs-12">                                                                                            
+                                            <select  class="form-control select" name="riding_style" value="riding_style" id ="alpha" multiple>
+                                                <option value="Enduro" {% if "Enduro" in riding_style %} selected  {% endif %}>Enduro</option>
+                                                <option value="BMX" {% if "BMX" in riding_style %} selected  {% endif %}>BMX</option>
+                                                <option value="XC" {% if "XC" in riding_style %} selected  {% endif %}>XC</option>
+                                                <option value="Road" {% if "Road" in riding_style %} selected  {% endif %}>Road</option>
+                                                <option value="Track" {% if "Track" in riding_style %} selected  {% endif %}>Track</option>
+                                                <option value="Trekking" {% if "Trekking" in riding_style %} selected  {% endif %}>Trekking</option>
+                                                <option value="City" {% if "City" in riding_style %} selected  {% endif %}>City</option>
+                                                <option value="Free Style" {% if "Free Style" in riding_style %} selected  {% endif %}>Free Style</option>
+                                                <option value="DH" {% if "DH" in riding_style %} selected  {% endif %}>DH</option>
+                                                <option value="other" {% if "other" in riding_style %} selected  {% endif %}>Other</option>
+                                            </select>
+                                            <span class="help-block">Choose your riding taste?</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Rider Identification</label>
+                                        <div class="col-md-6 col-xs-12">                                                                                                                                        
+                                            <input type="file" class="fileinput btn-primary" name="rider_id" id="filename" title="Browse ID Proof" {% if get_rider_id_proof == None %} required {% endif %} />
+                                         
+											<span class="help-block">
+                                            {% if rider_id_proof_uploaded == "Upload file" %}
+                                            Attach Scan Copy of your Rider ID Proof (File size less than 1 MB).
+                                            {% else %}
+                                            {{rider_id_proof_uploaded}}
+                                            {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+									
+									<div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">UCI Recognition</label>
+										<div class="col-md-6 col-xs-12">                                    
+											<div class="radio">
+												<label>
+													<input type="radio" name="uci_status" id="optionsRadios1" value="yes" {% if uci_status == "yes"%} checked {% endif %}/>
+													Yes, I am a UCI recognised rider.
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input type="radio" name="uci_status" id="optionsRadios2" value="no" {% if uci_status == "no"%} checked {% endif %} />
+													No, I am not a UCI recognised rider.
+												</label>
+											</div>    
+										</div>
+                                    </div>
+									 
+									<div class="form-group hider">
+                                        <label class="col-md-3 col-xs-12 control-label">UCI Identification Number</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div id="ugcid" class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-child"></span></span>
+                                                <input value="{{uci_id}}" id="uci_id" name="uci_id" type="text" class="form-control" placeholder="Enter your UCI ID"/>
+                                            </div>                                            
+                                            <span class="help-block">Please enter UCI unique identification number. (If Registerd)</span>
+                                        </div>
+                                    </div>
+									
+									
+									</script>
+									<div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Team Name</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-users"></span></span>
+                                                <input value="{{team_name}}" name="team_name" type="text" class="form-control" placeholder="Team's Name" required/>
+                                            </div>                                            
+                                            <span class="help-block">Please enter your team's name.</span>
+                                        </div>
+                                    </div>
+                                    
+									<div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Sponsors</label>
+                                        <div class="col-md-6 col-xs-12">                                                                                            
+                                            <input type="text" value="{{sponsors}}" name="sponsors" class="tagsinput" />
+                                            <span class="help-block">Fill in your sponsors.</span>
+                                        </div>
+                                    </div>
+									
+									<div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Jersey Size</label>
+                                        <div class="col-md-6 col-xs-12">                                                                                            
+                                            <select class="form-control select" name="jersey_size" >
+                                                <option value="XS" >XS (Extra Small)</option>
+                                                <option value="S" >S (Small)</option>
+                                                <option value="M">M (Medium)</option>
+												<option value="L" selected >L (Large)</option>
+												<option value="XL">XL (Extra Large)</option>
+												<option value="XXL">XXL (Extra Extra Large)</option>
+												
+                                            </select>
+                                            <span class="help-block">Are you a Professional Rider?</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">First Bike</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-cogs"></span></span>
+                                                <input value="{{first_bike}}" id="first_bike" name="first_bike" type="text" class="form-control" placeholder="First Bike" required/>
+                                            </div>                                            
+                                            <span class="help-block">First Bike</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">How much do you ride in a week</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-question-circle"></span></span>
+                                                <input value="{{often_rides}}" id="often_rides" name="often_rides" type="number" min = "0" class="form-control" placeholder="How much do you ride in a week" required/>
+                                            </div>                                            
+                                            <span class="help-block">How much do you ride in a week</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Favourite Trail</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-sitemap"></span></span>
+                                                <input value="{{fav_trail}}" id="fav_trail" name="fav_trail" type="text" class="form-control" placeholder="Favourite Trail" required/>
+                                            </div>                                            
+                                            <span class="help-block">Favourite Trail</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Dream Trail</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-sitemap"></span></span>
+                                                <input value="{{dream_trail}}" id="dream_trail" name="dream_trail" type="text" class="form-control" placeholder="Dream Trail" required/>
+                                            </div>                                            
+                                            <span class="help-block">Dream Trail</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Your best/most memorable riding experience so far</label>
+                                        <div class="col-md-6 col-xs-12">                                            
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-delicious"></span></span>
+                                                <input value="{{best_exp}}" id="best_exp" name="best_exp" type="text" class="form-control" placeholder="Your best/most memorable riding experience so far" required/>
+                                            </div>                                            
+                                            <span class="help-block">Your best/most memorable riding experience so far</span>
+                                        </div>
+                                    </div>
+									
+									
+								
+                                </div>
+                                <div class="panel-footer">                                  
+                                    <button class="btn btn-primary pull-right" onclick="getMultipleSelectedValue()">Submit</button>
+                                </div>
+                            </div>
+                            </form>
+                            
+                        </div>
+                    </div>                    
+                    
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->                                                
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+        
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>Are you sure you want to log out?</p>                    
+                        <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="{{url_for('views.logout')}}" class="btn btn-success btn-lg">Yes</a>
+                            <button class="btn btn-default btn-lg mb-control-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MESSAGE BOX-->
+
+        <!-- START PRELOADS -->
+        <audio id="audio-alert" src="../static/audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="../static/audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->             
+        
+    <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap.min.js"></script>                
+        <!-- END PLUGINS -->
+        
+        <!-- THIS PAGE PLUGINS -->
+        <script type='text/javascript' src='../static/js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="../static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap-datepicker.js"></script>                
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/bootstrap/bootstrap-select.js"></script>
+        <script type="text/javascript" src="../static/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+        <!-- END THIS PAGE PLUGINS -->       
+        
+        <!-- START TEMPLATE -->
+        
+        <script type="text/javascript" src="../static/js/plugins.js"></script>        
+        <script type="text/javascript" src="../static/js/actions.js"></script>   
+
+		<script>
+										$(document).ready(function() {
+											$("#uci_id").attr('required', false);
+											$( ".hider" ).hide();
+											$('input[type=radio][name=uci_status]').change(function() {
+												if (this.value == 'yes') {
+													console.log(this.value);
+													$( ".hider" ).show();
+													$("#uci_id").attr('required', true);
+												}
+												else if (this.value == 'no') {
+													console.log(this.value);
+													$( ".hider" ).hide();
+													$("#uci_id").attr('required', false);
+												}
+											});
+											
+											$( ".hider_rider_type" ).hide();
+													$("#rider_type_other_input").attr('required', false);
+											$("#rider_type").change(function() {
+												if($("#rider_type option:selected").val()=="other")
+												{
+													$( ".hider_rider_type" ).show();
+													$("#rider_type_other_input").attr('required', true);
+												}
+												else if ($("#rider_type option:selected").val()!="other")
+												{
+													$( ".hider_rider_type" ).hide();
+													$("#rider_type_other_input").attr('required', false);
+												}
+											});
+
+										});
+                                        setTimeout(function() {
+                                            $(".alert").alert('close');
+                                        }, 2000);   
+									
+									</script>		
+        <!-- END TEMPLATE -->
+    <!-- END SCRIPTS -->                   
+    </body>
+</html>
+
+
+
+
+
+
