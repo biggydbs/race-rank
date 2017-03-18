@@ -352,15 +352,18 @@ def get_size(get_image):
 	if "http" in get_image:
 		file = cStringIO.StringIO(urllib.urlopen(get_image).read())
 		get_image = file
-	with Image.open(get_image) as im:
-		width, height = im.size
-		if height/width > 2:
-			height = 200
-		elif height/width < 0.7:
-			height = 70
-		else:
-			height = ( height/width ) * 100
-		return (width,height)
+	try:
+		with Image.open(get_image) as im:
+			width, height = im.size
+			if height/width > 2:
+				height = 200
+			elif height/width < 0.7:
+				height = 70
+			else:
+				height = ( height/width ) * 100
+			return (width,height)
+	except:
+		return (0,100)
 
 # Time Validation
 def validate_time(race_time):

@@ -118,7 +118,7 @@ def userhome():
 		if "?" in var : 
 			var = var.split("?")[0]
 		var = ROOT_DIR + "/" + var
-		(width, height) = get_size(var)
+		(width, height) = (0,100)
 	session["facebook_name"] = facebook_name
 	get_html = print_html(session["profile_pic"],session["facebook_name"],height,session["email"])
 	participation = user.get("participation",False)
